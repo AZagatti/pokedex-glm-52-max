@@ -57,6 +57,8 @@ export default defineConfig({
 		// Allow onclick attributes.
 		'unicorn/prefer-add-event-listener': 'off',
 		// Allow ++ in loops.
-		'eslint/no-plusplus': 'off'
+		'eslint/no-plusplus': 'off',
+		// Allow `let` for $state variables (Svelte 5 runes require `let`).
+		'eslint/prefer-const': 'off'
 	}
 });
