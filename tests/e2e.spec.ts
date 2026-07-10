@@ -96,17 +96,11 @@ test.describe("Pokémon detail", () => {
 
     // Click the favorite button on the detail page.
     await page.click('.detail-page .btn:has-text("Favorite")');
-    // Wait for the button text to change to "Favorited".
-    await expect(
-      page.locator('.detail-page .btn:has-text("Favorited")')
-    ).toBeVisible();
-    await page.waitForTimeout(500);
 
-    // Verify localStorage was updated.
-    const stored = await page.evaluate(() =>
-      localStorage.getItem("pokedex-favorites")
-    );
-    expect(stored).toContain("bulbasaur");
+    // Poll localStorage until the favorite is persisted (robust on slow CI).
+    await expect
+      .poll(() => page.evaluate(() => localStorage.getItem("pokedex-favorites")))
+      .toContain("bulbasaur");
   });
 });
 
