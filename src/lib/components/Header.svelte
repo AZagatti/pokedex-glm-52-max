@@ -35,9 +35,9 @@
 </script>
 
 <header
-	style="position: sticky; top: 0; z-index: var(--z-header); background: color-mix(in srgb, var(--surface) 85%, transparent); backdrop-filter: blur(12px); box-shadow: var(--ring);"
+	style="position: sticky; top: 0; z-index: var(--z-header); background: color-mix(in srgb, var(--surface) 85%, transparent); backdrop-filter: blur(12px); box-shadow: var(--ring); contain: layout;"
 >
-	<nav class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3">
+	<nav class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3" style="min-height: 56px;">
 		<a href={base} class="flex items-center gap-2 font-extrabold text-lg" onclick={closeMenu}>
 			<span class="pokeball-logo" aria-hidden="true"></span>
 			<span>Pokédex</span>

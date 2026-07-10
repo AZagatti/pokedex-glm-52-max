@@ -62,7 +62,7 @@
 
 <div
 	class="toolbar"
-	style="position: sticky; top: 64px; z-index: 50; background: color-mix(in srgb, var(--surface) 90%, transparent); backdrop-filter: blur(12px);"
+	style="position: sticky; top: 64px; z-index: 50; background: color-mix(in srgb, var(--surface) 90%, transparent); backdrop-filter: blur(12px); contain: layout;"
 >
 	<div class="toolbar-inner mx-auto max-w-7xl px-4 py-3">
 		<!-- Search row -->
@@ -123,12 +123,15 @@
 				<ArrowDownUp size={16} class="select-icon" aria-hidden="true" />
 			</div>
 
-			{#if hasFilters}
-				<button type="button" class="btn btn-ghost clear-all" onclick={onClear}>
-					<X size={16} />
-					Clear filters
-				</button>
-			{/if}
+			<button
+				type="button"
+				class="btn btn-ghost clear-all"
+				onclick={onClear}
+				style="visibility: {hasFilters ? 'visible' : 'hidden'};"
+			>
+				<X size={16} />
+				Clear filters
+			</button>
 		</div>
 
 		<!-- Type multi-select chips -->

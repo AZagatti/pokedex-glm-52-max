@@ -29,5 +29,9 @@ playwright-report
 
 # Lighthouse
 .lighthouseci
+
+# OS metadata (WSL)
 *Zone.Identifier
-*.Zone.Identifier
+
+# Local agent tooling
+/.agents
