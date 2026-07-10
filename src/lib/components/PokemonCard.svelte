@@ -143,6 +143,8 @@
 		align-items: center;
 		justify-content: center;
 		padding: 0.5rem;
+		/* Fixed height prevents CLS when sprites load */
+		min-height: 120px;
 	}
 
 	.info {
