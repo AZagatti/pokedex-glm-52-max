@@ -1,0 +1,24 @@
+# Lefthook configuration — git hooks wired to the pinned toolchain.
+# https://lefthook.dev/configuration/
+pre-commit:
+  parallel: true
+  jobs:
+    - name: lint
+      glob: "*.{js,ts,svelte,json}"
+      run: npx oxlint --fix {staged_files} && git add {staged_files}
+
+    # oxfmt only on non-.svelte files — it converts `let`→`const` which breaks
+    # Svelte 5 $state runes. Svelte files are validated by svelte-check instead.
+    - name: format
+      glob: "*.{js,ts,json,css,md}"
+      exclude: "\\.svelte$"
+      run: npx oxfmt --write {staged_files} && git add {staged_files}
+
+    - name: typecheck
+      glob: "*.{ts,svelte}"
+      run: npm run check
+
+pre-push:
+  jobs:
+    - name: test
+      run: npm run test

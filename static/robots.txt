@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://azagatti.github.io/pokedex-glm-52-max/sitemap.xml

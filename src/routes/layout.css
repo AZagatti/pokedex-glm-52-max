@@ -1,0 +1,291 @@
+@import "tailwindcss";
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+
+/* =============================================================================
+   Pokédex Design System
+   - CSS variables flip for dark mode (emil: variables, not dark: utilities)
+   - Type colors drive the Pokémon type palette
+   - Motion respects prefers-reduced-motion
+   ========================================================================== */
+
+/* ---- Theme tokens (light is default, [data-theme="dark"] overrides) -------- */
+:root {
+  /* Neutral scale (Radix-like) */
+  --gray-1: #ffffff;
+  --gray-2: #fdfdfd;
+  --gray-3: #f4f4f5;
+  --gray-4: #e4e4e7;
+  --gray-5: #d4d4d8;
+  --gray-6: #a1a1aa;
+  --gray-7: #71717a;
+  --gray-8: #52525b;
+  --gray-9: #3f3f46;
+  --gray-10: #27272a;
+  --gray-11: #1f1f23;
+  --gray-12: #0c0c0e;
+
+  /* Accent — Pokéball red */
+  --accent-1: #fef2f2;
+  --accent-9: #dc2626;
+  --accent-10: #b91c1c;
+
+  /* Surfaces */
+  --bg: var(--gray-2);
+  --bg-subtle: var(--gray-3);
+  --surface: var(--gray-1);
+  --surface-hover: var(--gray-3);
+  --text: var(--gray-12);
+  --text-muted: var(--gray-7);
+  --border: rgba(0, 0, 0, 0.08);
+  --border-strong: rgba(0, 0, 0, 0.14);
+
+  /* Shadows for borders (emil: box-shadow over border for blending) */
+  --ring: 0 0 0 1px var(--border);
+  --ring-strong: 0 0 0 1px var(--border-strong);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04), 0 0 0 1px var(--border);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.06), 0 0 0 1px var(--border);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08), 0 0 0 1px var(--border);
+  --shadow-focus: 0 0 0 2px var(--gray-1), 0 0 0 4px var(--accent-9);
+
+  /* Motion — easing per emil blueprint */
+  --ease-out: cubic-bezier(0.215, 0.61, 0.355, 1);
+  --ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1);
+
+  /* z-index scale */
+  --z-header: 100;
+  --z-dropdown: 200;
+  --z-overlay: 300;
+
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  --gray-1: #111113;
+  --gray-2: #161618;
+  --gray-3: #1c1c1f;
+  --gray-4: #232327;
+  --gray-5: #2a2a2f;
+  --gray-6: #52525b;
+  --gray-7: #8b8b94;
+  --gray-8: #a1a1aa;
+  --gray-9: #c4c4cc;
+  --gray-10: #e4e4e7;
+  --gray-11: #f0f0f2;
+  --gray-12: #fafafa;
+
+  --accent-1: #2a1212;
+  --accent-9: #f87171;
+  --accent-10: #fca5a5;
+
+  --border: rgba(255, 255, 255, 0.08);
+  --border-strong: rgba(255, 255, 255, 0.14);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2), 0 0 0 1px var(--border);
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.3), 0 0 0 1px var(--border);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4), 0 0 0 1px var(--border);
+  --shadow-focus: 0 0 0 2px var(--gray-1), 0 0 0 4px var(--accent-9);
+
+  color-scheme: dark;
+}
+
+/* ---- Base styles --------------------------------------------------------- */
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family:
+      "Inter",
+      system-ui,
+      -apple-system,
+      "Segoe UI",
+      Roboto,
+      Helvetica,
+      Arial,
+      sans-serif;
+    transition:
+      background-color 200ms var(--ease-out),
+      color 200ms var(--ease-out);
+  }
+
+  /* Disable transitions during theme switch to avoid flash (emil) */
+  body.theme-transitioning,
+  body.theme-transitioning * {
+    transition: none !important;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    text-wrap: balance;
+    letter-spacing: -0.02em;
+  }
+
+  /* Inputs at 16px+ to prevent iOS zoom (emil) */
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+
+  /* Focus-visible: consistent outline (emil) */
+  *:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+    border-radius: 6px;
+  }
+
+  /* Tabular nums for dynamic numbers */
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Scroll margin for sticky header */
+  [id] {
+    scroll-margin-top: 80px;
+  }
+}
+
+/* ---- Utility component classes ------------------------------------------- */
+@layer components {
+  .surface {
+    background: var(--surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .card {
+    background: var(--surface);
+    border-radius: 16px;
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.25rem 0.625rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1;
+  }
+
+  /* Skeleton shimmer */
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      var(--gray-3) 25%,
+      var(--gray-4) 50%,
+      var(--gray-3) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite linear;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: 200% 0;
+    }
+    100% {
+      background-position: -200% 0;
+    }
+  }
+
+  /* Button base */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    min-height: 40px;
+    cursor: pointer;
+    transition:
+      transform 120ms var(--ease-out),
+      background-color 150ms ease,
+      color 150ms ease,
+      box-shadow 150ms ease;
+    touch-action: manipulation;
+  }
+
+  .btn:active {
+    transform: scale(0.97);
+  }
+
+  .btn-primary {
+    background: var(--accent-9);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background: var(--accent-10);
+  }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text);
+  }
+
+  .btn-ghost:hover {
+    background: var(--surface-hover);
+  }
+
+  /* Icon button — min 44px tap target (emil) */
+  .icon-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    min-height: 44px;
+    border-radius: 10px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition:
+      background-color 150ms ease,
+      color 150ms ease,
+      transform 120ms var(--ease-out);
+    touch-action: manipulation;
+  }
+
+  .icon-btn:hover {
+    background: var(--surface-hover);
+    color: var(--text);
+  }
+
+  .icon-btn:active {
+    transform: scale(0.92);
+  }
+}
+
+/* ---- Reduced motion (emil: every animation needs this) -------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .skeleton {
+    animation: none;
+  }
+}

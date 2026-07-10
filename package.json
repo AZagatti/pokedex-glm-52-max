@@ -1,0 +1,51 @@
+{
+  "name": "pokedex-glm-52",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite dev",
+    "build": "vite build",
+    "preview": "vite preview",
+    "prepare": "svelte-kit sync || echo '' && lefthook install || echo ''",
+    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+    "lint": "oxlint .",
+    "lint:fix": "oxlint --fix .",
+    "format": "oxfmt --write 'src/**/*.ts' 'src/**/*.js' 'src/**/*.json' 'src/**/*.css' 'tests/**/*.ts'",
+    "format:check": "oxfmt --check 'src/**/*.ts' 'src/**/*.js' 'src/**/*.json' 'src/**/*.css' 'tests/**/*.ts'",
+    "test:unit": "vitest",
+    "test": "npm run test:unit -- --run && npm run test:e2e",
+    "test:e2e": "playwright install chromium && playwright test"
+  },
+  "dependencies": {
+    "lucide-svelte": "^1.0.1",
+    "zod": "^4.4.3"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.60.0",
+    "@sveltejs/adapter-static": "^3.0.10",
+    "@sveltejs/kit": "^2.63.0",
+    "@sveltejs/vite-plugin-svelte": "^7.1.2",
+    "@tailwindcss/forms": "^0.5.11",
+    "@tailwindcss/typography": "^0.5.19",
+    "@tailwindcss/vite": "^4.3.0",
+    "@types/node": "^26.1.1",
+    "@vitest/browser-playwright": "^4.1.8",
+    "lefthook": "^2.1.10",
+    "oxfmt": "^0.58.0",
+    "oxlint": "^1.73.0",
+    "playwright": "^1.60.0",
+    "svelte": "^5.56.1",
+    "svelte-check": "^4.6.0",
+    "tailwindcss": "^4.3.0",
+    "typescript": "^6.0.3",
+    "ultracite": "7.9.3",
+    "vite": "^8.0.16",
+    "vitest": "^4.1.8",
+    "vitest-browser-svelte": "^2.1.1"
+  },
+  "allowScripts": {
+    "lefthook@2.1.10": true
+  }
+}
